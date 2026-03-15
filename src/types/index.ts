@@ -32,3 +32,36 @@ export enum TopicName {
     BitManipulation = 'Bit Manipulation',
     Math = 'Math',
 }
+
+export interface Problem {
+    id: string;
+    title: string;
+    leetcodeUrl: string;
+    difficulty: Difficulty;
+}
+
+export interface ProblemProgress {
+    problemId: string;
+    solved: boolean;
+    confidence: Confidence | null;
+    lastUpdated: string;
+}
+
+export interface PatternGroup {
+    id: string;
+    name: string;
+    problemIds: string[];
+}
+
+export interface Topic {
+    id: string;
+    name: TopicName;
+    groups: PatternGroup[];
+}
+
+export interface AppData {
+    version: number;
+    topics: Topic[];
+    problems: Record<string, Problem>;
+    progress: Record<string, ProblemProgress>;
+}
