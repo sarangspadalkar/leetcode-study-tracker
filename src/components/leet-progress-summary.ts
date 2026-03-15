@@ -1,5 +1,5 @@
-import { css, defineElement, html } from 'element-vir';
-import { ViraProgress } from 'vira';
+import {css, defineElement, html} from 'element-vir';
+import {ViraProgress} from 'vira';
 
 export const LeetProgressSummary = defineElement<{
     totalProblems: number;
@@ -23,12 +23,12 @@ export const LeetProgressSummary = defineElement<{
             height: 10px;
         }
     `,
-    render({ inputs }) {
-        const { totalProblems, solvedCount } = inputs;
+    render({inputs}) {
+        const {totalProblems, solvedCount} = inputs;
         const pct = totalProblems > 0 ? Math.round((solvedCount / totalProblems) * 100) : 0;
         return html`
             <div class="stats">${solvedCount}/${totalProblems} solved (${pct}%)</div>
-            <${ViraProgress.assign({ value: pct, max: 100 })}></${ViraProgress}>
+            <${ViraProgress.assign({value: pct, max: 100})}></${ViraProgress}>
         `;
     },
 });

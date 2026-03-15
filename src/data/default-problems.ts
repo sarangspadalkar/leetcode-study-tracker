@@ -1,4 +1,4 @@
-import { Difficulty, TopicName, type AppData } from '../types/index.js';
+import {Difficulty, TopicName, type AppData} from '../types/index.js';
 
 const dpTopicId = 'dynamic-programming';
 const fibGroupId = 'dp-fibonacci-pattern';

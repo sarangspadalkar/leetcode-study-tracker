@@ -33,8 +33,8 @@
     "devDependencies": {
         "@types/feather-icons": "^4.29.4",
         "cspell": "^5.3.3",
-        "prettier": "^2.2.1",
-        "prettier-plugin-organize-imports": "^1.1.1",
+        "prettier": "^3.8.1",
+        "prettier-plugin-organize-imports": "^4.3.0",
         "prettier-plugin-packagejson": "^2.2.10",
         "prettier-plugin-sort-json": "^0.0.2",
         "typescript": "~5.9.3",
