@@ -1,6 +1,6 @@
 import localforage from 'localforage-esm';
-import { checkValidShape, defineShape } from 'object-shape-tester';
-import type { AppData } from '../types/index.js';
+import {checkValidShape, defineShape} from 'object-shape-tester';
+import type {AppData} from '../types/index.js';
 
 const STORAGE_KEY = 'leetcode-tracker:data';
 const CURRENT_VERSION = 1;
@@ -26,7 +26,7 @@ export async function load(): Promise<AppData | null> {
 }
 
 export async function save(data: AppData): Promise<void> {
-    const payload: AppData = { ...data, version: CURRENT_VERSION };
+    const payload: AppData = {...data, version: CURRENT_VERSION};
     await localforage.setItem(STORAGE_KEY, payload);
 }
 

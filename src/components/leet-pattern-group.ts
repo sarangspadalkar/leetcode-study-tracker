@@ -1,6 +1,6 @@
-import { css, defineElement, html } from 'element-vir';
-import type { PatternGroup, Problem, ProblemProgress } from '../types/index.js';
-import { LeetProblemRow } from './leet-problem-row.js';
+import {css, defineElement, html} from 'element-vir';
+import type {PatternGroup, Problem, ProblemProgress} from '../types/index.js';
+import {LeetProblemRow} from './leet-problem-row.js';
 
 export const LeetPatternGroup = defineElement<{
     group: PatternGroup;
@@ -29,17 +29,17 @@ export const LeetPatternGroup = defineElement<{
             overflow: hidden;
         }
     `,
-    render({ inputs }) {
-        const { group, problems, progress } = inputs;
+    render({inputs}) {
+        const {group, problems, progress} = inputs;
         const rows = group.problemIds
             .map((id) => {
                 const problem = problems[id];
                 if (!problem) return null;
                 return html`
                     <${LeetProblemRow.assign({
-                    problem,
-                    progress: progress[id],
-                })}></${LeetProblemRow}>
+                        problem,
+                        progress: progress[id],
+                    })}></${LeetProblemRow}>
                 `;
             })
             .filter(Boolean);

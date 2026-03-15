@@ -1,5 +1,5 @@
-import { css, defineElement, html } from 'element-vir';
-import { createSizedIcon, featherIcons, ViraCheckbox, ViraIcon } from 'vira';
+import {css, defineElement, html} from 'element-vir';
+import {createSizedIcon, featherIcons, ViraCheckbox, ViraIcon} from 'vira';
 import {
     type Difficulty,
     type Problem,
@@ -106,15 +106,15 @@ export const LeetProblemRow = defineElement<{
             height: 16px;
         }
     `,
-    render({ inputs }) {
-        const { problem, progress } = inputs;
+    render({inputs}) {
+        const {problem, progress} = inputs;
         const solved = progress?.solved ?? false;
         const confidence = progress?.confidence ?? null;
         return html`
             <${ViraCheckbox.assign({
-            value: solved,
-            disabled: true,
-        })}></${ViraCheckbox}>
+                value: solved,
+                disabled: true,
+            })}></${ViraCheckbox}>
             <span class="title">${problem.title}</span>
             <span class="badge ${difficultyClass(problem.difficulty)}">${problem.difficulty}</span>
             <span class="confidence">${confidenceLabel(confidence)}</span>
@@ -125,7 +125,7 @@ export const LeetProblemRow = defineElement<{
                 rel="noopener noreferrer"
                 title="Open on LeetCode"
             >
-                <${ViraIcon.assign({ icon: arrowUpRightIcon })} class="link-icon"></${ViraIcon}>
+                <${ViraIcon.assign({icon: arrowUpRightIcon})} class="link-icon"></${ViraIcon}>
             </a>
         `;
     },

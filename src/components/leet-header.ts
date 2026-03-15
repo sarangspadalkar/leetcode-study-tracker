@@ -1,5 +1,5 @@
-import { css, defineElement, defineElementEvent, html, listen } from 'element-vir';
-import { ViraButton } from 'vira';
+import {css, defineElement, defineElementEvent, html, listen} from 'element-vir';
+import {ViraButton} from 'vira';
 
 export const LeetHeader = defineElement()({
     tagName: 'leet-header',
@@ -23,10 +23,10 @@ export const LeetHeader = defineElement()({
             color: #1a1a2e;
         }
     `,
-    render({ dispatch, events }) {
+    render({dispatch, events}) {
         return html`
             <h1>LeetCode Study Tracker</h1>
-            <${ViraButton.assign({ text: 'Reset All' })}
+            <${ViraButton.assign({text: 'Reset All'})}
                 ${listen('click', () => dispatch(new events.resetAllRequested()))}
             ></${ViraButton}>
         `;

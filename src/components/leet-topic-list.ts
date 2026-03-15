@@ -1,6 +1,6 @@
-import { css, defineElement, html } from 'element-vir';
-import type { Problem, ProblemProgress, Topic } from '../types/index.js';
-import { LeetTopic } from './leet-topic.js';
+import {css, defineElement, html} from 'element-vir';
+import type {Problem, ProblemProgress, Topic} from '../types/index.js';
+import {LeetTopic} from './leet-topic.js';
 
 export const LeetTopicList = defineElement<{
     topics: Topic[];
@@ -13,18 +13,18 @@ export const LeetTopicList = defineElement<{
             display: block;
         }
     `,
-    render({ inputs }) {
-        const { topics, problems, progress } = inputs;
+    render({inputs}) {
+        const {topics, problems, progress} = inputs;
         return html`
             ${topics.map(
-            (topic: Topic) => html`
+                (topic: Topic) => html`
                     <${LeetTopic.assign({
-                topic,
-                problems,
-                progress,
-            })}></${LeetTopic}>
+                        topic,
+                        problems,
+                        progress,
+                    })}></${LeetTopic}>
                 `,
-        )}
+            )}
         `;
     },
 });
