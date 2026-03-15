@@ -6,6 +6,8 @@ This tool is designed specifically for **coding interview preparation**, allowin
 
 The application stores all data locally in the user's browser, making it simple, fast, and deployable on **GitHub Pages** without requiring a backend.
 
+**Live app:** [https://sarangspadalkar.github.io/leetcode-study-tracker/](https://sarangspadalkar.github.io/leetcode-study-tracker/)
+
 ---
 
 # Features
