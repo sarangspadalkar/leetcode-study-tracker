@@ -2,7 +2,7 @@
     "name": "leetcode-study-tracker",
     "version": "0.0.1",
     "private": true,
-    "description": "",
+    "description": "Track LeetCode problem-solving progress by topic and pattern",
     "keywords": [],
     "homepage": "https://github.com/sarangspadalkar/leetcode-study-tracker#readme",
     "bugs": {
@@ -14,20 +14,28 @@
     },
     "license": "MIT",
     "author": "sarangspadalkar (github.com/sarangspadalkar)",
-    "main": "dist/index.js",
+    "type": "module",
     "scripts": {
-        "prepublishOnly": "npm run test",
-        "test": "tsc && node dist/index.js",
-        "spellcheck": "cspell --no-progress --unique \"./**/*\"",
-        "format": "prettier --ignore-path .gitignore --write  \"./**/*.{ts,css,html,json}\""
+        "build": "tsc && vite build",
+        "dev": "vite",
+        "format": "prettier --ignore-path .gitignore --write  \"./**/*.{ts,css,html,json}\"",
+        "preview": "vite preview",
+        "spellcheck": "cspell --no-progress --unique \"./**/*\""
+    },
+    "dependencies": {
+        "element-vir": "^26.14.6",
+        "feather-icons": "^4.29.2",
+        "theme-vir": "^28.23.1",
+        "vira": "^31.7.2"
     },
     "devDependencies": {
-        "@types/node": "^14.14.31",
+        "@types/feather-icons": "^4.29.4",
         "cspell": "^5.3.3",
         "prettier": "^2.2.1",
         "prettier-plugin-organize-imports": "^1.1.1",
         "prettier-plugin-packagejson": "^2.2.10",
         "prettier-plugin-sort-json": "^0.0.2",
-        "typescript": "^4.2.2"
+        "typescript": "~5.9.3",
+        "vite": "^7.3.1"
     }
 }
