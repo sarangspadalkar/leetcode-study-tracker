@@ -1,21 +1,19 @@
 {
-    "name": "repo-name-here",
+    "name": "leetcode-study-tracker",
     "version": "0.0.1",
     "private": true,
     "description": "",
-    "keywords": [
-        "vir"
-    ],
-    "homepage": "https://github.com/electrovir/repo-name-here#readme",
+    "keywords": [],
+    "homepage": "https://github.com/sarangspadalkar/leetcode-study-tracker#readme",
     "bugs": {
-        "url": "https://github.com/electrovir/repo-name-here/issues"
+        "url": "https://github.com/sarangspadalkar/leetcode-study-tracker/issues"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/electrovir/repo-name-here.git"
+        "url": "git+https://github.com/sarangspadalkar/leetcode-study-tracker.git"
     },
     "license": "MIT",
-    "author": "electrovir (github.com/electrovir)",
+    "author": "sarangspadalkar (github.com/sarangspadalkar)",
     "main": "dist/index.js",
     "scripts": {
         "prepublishOnly": "npm run test",
