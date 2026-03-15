@@ -1,5 +1,5 @@
 import {css, defineElement, defineElementEvent, html, listen} from 'element-vir';
-import {createSizedIcon, featherIcons, ViraCheckbox, ViraIcon} from 'vira';
+import {createSizedIcon, featherIcons, ViraCheckbox, ViraIcon, ViraSelect} from 'vira';
 import {
     type Difficulty,
     type Problem,
@@ -9,6 +9,13 @@ import {
 } from '../types/index.js';
 
 const arrowUpRightIcon = createSizedIcon(featherIcons['arrow-up-right'], 16);
+
+const confidenceOptions = [
+    {value: '', label: '—'},
+    {value: Confidence.Low, label: 'Low'},
+    {value: Confidence.Medium, label: 'Med'},
+    {value: Confidence.High, label: 'High'},
+];
 
 function difficultyClass(d: Difficulty): string {
     switch (d) {
@@ -38,66 +45,134 @@ export const LeetProblemRow = defineElement<{
             align-items: center;
             gap: 12px;
             padding: 10px 12px;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid var(--leet-border);
             font-size: 14px;
+            transition: background 0.15s ease;
         }
 
         :host(:last-child) {
             border-bottom: none;
         }
 
+        :host(:hover) {
+            background: var(--leet-surface-hover);
+        }
+
+        :host(:focus-within) {
+            background: var(--leet-surface-hover);
+            outline: 2px solid var(--leet-focus-ring);
+            outline-offset: -2px;
+        }
+
         .title {
             flex: 1;
             font-weight: 500;
-            color: #1a1a2e;
+            color: var(--leet-text);
         }
 
         .badge {
+            padding: 3px 8px;
+            border-radius: var(--leet-radius-sm);
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .diff-easy {
+            background: var(--leet-easy-bg);
+            color: var(--leet-easy-text);
+        }
+
+        .diff-medium {
+            background: var(--leet-medium-bg);
+            color: var(--leet-medium-text);
+        }
+
+        .diff-hard {
+            background: var(--leet-hard-bg);
+            color: var(--leet-hard-text);
+        }
+
+        .confidence-placeholder {
+            font-size: 12px;
+            color: var(--leet-text-subtle);
+            min-width: 72px;
+        }
+
+        .confidence-wrap vira-select {
+            width: 90px;
+            max-width: 90px;
+        }
+
+        .confidence-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
             padding: 2px 8px;
-            border-radius: 4px;
+            border-radius: var(--leet-radius-sm);
             font-size: 12px;
             font-weight: 500;
         }
 
-        .diff-easy {
-            background: #d1e7dd;
-            color: #0f5132;
+        .confidence-pill.conf-low {
+            background: var(--leet-conf-low-bg);
+            color: var(--leet-conf-low-text);
         }
 
-        .diff-medium {
-            background: #fff3cd;
-            color: #664d03;
+        .confidence-pill.conf-med {
+            background: var(--leet-conf-med-bg);
+            color: var(--leet-conf-med-text);
         }
 
-        .diff-hard {
-            background: #f8d7da;
-            color: #842029;
+        .confidence-pill.conf-high {
+            background: var(--leet-conf-high-bg);
+            color: var(--leet-conf-high-text);
         }
 
-        .confidence {
-            font-size: 12px;
-            color: #6c757d;
-            min-width: 72px;
+        .confidence-wrap {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
 
-        .confidence-select {
-            padding: 2px 6px;
-            border-radius: 4px;
-            border: 1px solid #dee2e6;
-            font-size: 12px;
-            background: #fff;
-            cursor: pointer;
+        .confidence-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .confidence-dot.conf-low {
+            background: var(--leet-conf-low-text);
+        }
+
+        .confidence-dot.conf-medium {
+            background: var(--leet-conf-med-text);
+        }
+
+        .confidence-dot.conf-high {
+            background: var(--leet-conf-high-text);
         }
 
         .link {
-            color: #0d6efd;
+            color: var(--leet-accent);
             text-decoration: none;
             display: inline-flex;
             align-items: center;
+            padding: 4px;
+            border-radius: var(--leet-radius-sm);
+            transition:
+                color 0.15s ease,
+                background 0.15s ease;
         }
 
         .link:hover {
-            text-decoration: underline;
+            color: var(--leet-accent-hover);
+            background: var(--leet-surface-hover);
+        }
+
+        .link:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px var(--leet-focus-ring);
         }
 
         .link-icon {
@@ -109,6 +184,12 @@ export const LeetProblemRow = defineElement<{
         const {problem, progress} = inputs;
         const solved = progress?.solved ?? false;
         const confidence = progress?.confidence ?? null;
+        const confidenceDot =
+            confidence === null
+                ? ''
+                : html`
+                      <span class="confidence-dot conf-${confidence}" title=${confidence}></span>
+                  `;
         return html`
             <${ViraCheckbox.assign({
                 value: solved,
@@ -127,43 +208,30 @@ export const LeetProblemRow = defineElement<{
             ${
                 solved
                     ? html`
-                          <select
-                              class="confidence-select"
-                              ${listen('change', (e: Event) => {
-                                  const select = e.target as HTMLSelectElement;
-                                  const v = select.value;
-                                  const conf = v === '' ? null : (v as Confidence);
-                                  dispatch(
-                                      new events.confidenceChanged({
-                                          problemId: problem.id,
-                                          confidence: conf,
-                                      }),
-                                  );
+                          <span class="confidence-wrap">
+                              ${confidenceDot}
+                              <${ViraSelect.assign({
+                                  options: confidenceOptions,
+                                  value: confidence ?? '',
                               })}
-                          >
-                              <option value="" ?selected=${confidence === null}>—</option>
-                              <option
-                                  value=${Confidence.Low}
-                                  ?selected=${confidence === Confidence.Low}
-                              >
-                                  Low
-                              </option>
-                              <option
-                                  value=${Confidence.Medium}
-                                  ?selected=${confidence === Confidence.Medium}
-                              >
-                                  Med
-                              </option>
-                              <option
-                                  value=${Confidence.High}
-                                  ?selected=${confidence === Confidence.High}
-                              >
-                                  High
-                              </option>
-                          </select>
+                                  ${listen(
+                                      ViraSelect.events.valueChange,
+                                      (e: CustomEvent<string>) => {
+                                          const v = e.detail;
+                                          const conf = v === '' ? null : (v as Confidence);
+                                          dispatch(
+                                              new events.confidenceChanged({
+                                                  problemId: problem.id,
+                                                  confidence: conf,
+                                              }),
+                                          );
+                                      },
+                                  )}
+                              ></${ViraSelect}>
+                          </span>
                       `
                     : html`
-                          <span class="confidence">—</span>
+                          <span class="confidence-placeholder">—</span>
                       `
             }
             <a

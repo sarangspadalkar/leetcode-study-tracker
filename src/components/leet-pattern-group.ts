@@ -17,16 +17,17 @@ export const LeetPatternGroup = defineElement<{
         .group-name {
             font-size: 15px;
             font-weight: 600;
-            color: #495057;
+            color: var(--leet-text-muted);
             margin-bottom: 8px;
             padding-bottom: 4px;
         }
 
         .rows {
-            border: 1px solid #dee2e6;
-            border-radius: 8px;
-            background: #fff;
+            border: 1px solid var(--leet-border);
+            border-radius: var(--leet-radius-md);
+            background: var(--leet-surface);
             overflow: hidden;
+            box-shadow: var(--leet-shadow);
         }
     `,
     render({inputs}) {

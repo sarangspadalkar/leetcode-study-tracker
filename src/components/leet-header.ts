@@ -12,7 +12,7 @@ export const LeetHeader = defineElement()({
             align-items: center;
             justify-content: space-between;
             padding: 16px 0;
-            border-bottom: 1px solid #dee2e6;
+            border-bottom: 1px solid var(--leet-border);
             margin-bottom: 16px;
         }
 
@@ -20,7 +20,13 @@ export const LeetHeader = defineElement()({
             font-size: 24px;
             font-weight: 700;
             margin: 0;
-            color: #1a1a2e;
+            color: var(--leet-text);
+            font-family: var(--leet-font-display);
+        }
+
+        vira-button {
+            --vira-button-primary-background-color: var(--leet-accent);
+            --vira-button-primary-hover-background-color: var(--leet-accent-hover);
         }
     `,
     render({dispatch, events}) {

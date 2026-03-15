@@ -22,6 +22,11 @@ export const LeetTopic = defineElement<{
             width: 100%;
             display: flex;
             flex-direction: column;
+            border-radius: var(--leet-radius-md);
+            box-shadow: var(--leet-shadow);
+            overflow: hidden;
+            border: 1px solid var(--leet-border);
+            background: var(--leet-surface);
         }
 
         .topic-header {
@@ -34,7 +39,12 @@ export const LeetTopic = defineElement<{
         .topic-title {
             font-size: 17px;
             font-weight: 600;
-            color: #1a1a2e;
+            color: var(--leet-text);
+        }
+
+        vira-button {
+            --vira-button-secondary-border-color: var(--leet-border-strong);
+            --vira-button-secondary-hover-background-color: var(--leet-surface-hover);
         }
     `,
     render({inputs, dispatch, events}) {
