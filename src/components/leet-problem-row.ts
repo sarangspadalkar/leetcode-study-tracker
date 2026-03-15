@@ -1,4 +1,4 @@
-import {css, defineElement, html} from 'element-vir';
+import {css, defineElement, defineElementEvent, html, listen} from 'element-vir';
 import {createSizedIcon, featherIcons, ViraCheckbox, ViraIcon} from 'vira';
 import {
     type Difficulty,
@@ -23,25 +23,15 @@ function difficultyClass(d: Difficulty): string {
     }
 }
 
-function confidenceLabel(c: Confidence | null): string {
-    if (c === null) return '—';
-    switch (c) {
-        case Confidence.Low:
-            return 'Low';
-        case Confidence.Medium:
-            return 'Med';
-        case Confidence.High:
-            return 'High';
-        default:
-            return '—';
-    }
-}
-
 export const LeetProblemRow = defineElement<{
     problem: Problem;
     progress: ProblemProgress | undefined;
 }>()({
     tagName: 'leet-problem-row',
+    events: {
+        solvedChanged: defineElementEvent<{problemId: string; solved: boolean}>(),
+        confidenceChanged: defineElementEvent<{problemId: string; confidence: Confidence | null}>(),
+    },
     styles: css`
         :host {
             display: flex;
@@ -87,7 +77,16 @@ export const LeetProblemRow = defineElement<{
         .confidence {
             font-size: 12px;
             color: #6c757d;
-            min-width: 36px;
+            min-width: 72px;
+        }
+
+        .confidence-select {
+            padding: 2px 6px;
+            border-radius: 4px;
+            border: 1px solid #dee2e6;
+            font-size: 12px;
+            background: #fff;
+            cursor: pointer;
         }
 
         .link {
@@ -106,18 +105,67 @@ export const LeetProblemRow = defineElement<{
             height: 16px;
         }
     `,
-    render({inputs}) {
+    render({inputs, dispatch, events}) {
         const {problem, progress} = inputs;
         const solved = progress?.solved ?? false;
         const confidence = progress?.confidence ?? null;
         return html`
             <${ViraCheckbox.assign({
                 value: solved,
-                disabled: true,
-            })}></${ViraCheckbox}>
+                disabled: false,
+            })}
+                ${listen(ViraCheckbox.events.valueChange, (event: CustomEvent<boolean>) => {
+                    if (event.detail !== solved) {
+                        dispatch(
+                            new events.solvedChanged({problemId: problem.id, solved: event.detail}),
+                        );
+                    }
+                })}
+            ></${ViraCheckbox}>
             <span class="title">${problem.title}</span>
             <span class="badge ${difficultyClass(problem.difficulty)}">${problem.difficulty}</span>
-            <span class="confidence">${confidenceLabel(confidence)}</span>
+            ${
+                solved
+                    ? html`
+                          <select
+                              class="confidence-select"
+                              ${listen('change', (e: Event) => {
+                                  const select = e.target as HTMLSelectElement;
+                                  const v = select.value;
+                                  const conf = v === '' ? null : (v as Confidence);
+                                  dispatch(
+                                      new events.confidenceChanged({
+                                          problemId: problem.id,
+                                          confidence: conf,
+                                      }),
+                                  );
+                              })}
+                          >
+                              <option value="" ?selected=${confidence === null}>—</option>
+                              <option
+                                  value=${Confidence.Low}
+                                  ?selected=${confidence === Confidence.Low}
+                              >
+                                  Low
+                              </option>
+                              <option
+                                  value=${Confidence.Medium}
+                                  ?selected=${confidence === Confidence.Medium}
+                              >
+                                  Med
+                              </option>
+                              <option
+                                  value=${Confidence.High}
+                                  ?selected=${confidence === Confidence.High}
+                              >
+                                  High
+                              </option>
+                          </select>
+                      `
+                    : html`
+                          <span class="confidence">—</span>
+                      `
+            }
             <a
                 class="link"
                 href=${problem.leetcodeUrl}

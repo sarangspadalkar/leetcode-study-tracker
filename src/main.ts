@@ -1,4 +1,5 @@
 import './components/leet-app.js';
+import './components/leet-confirm-dialog.js';
 import './components/leet-header.js';
 import './components/leet-pattern-group.js';
 import './components/leet-problem-row.js';

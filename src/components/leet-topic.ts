@@ -10,7 +10,7 @@ export const LeetTopic = defineElement<{
 }>()({
     tagName: 'leet-topic',
     events: {
-        resetTopicRequested: defineElementEvent<void>(),
+        resetTopicRequested: defineElementEvent<{topicId: string}>(),
     },
     styles: css`
         :host {
@@ -48,7 +48,7 @@ export const LeetTopic = defineElement<{
                     <${ViraButton.assign({text: 'Reset Topic'})}
                         ${listen('click', (e: Event) => {
                             e.stopPropagation();
-                            dispatch(new events.resetTopicRequested());
+                            dispatch(new events.resetTopicRequested({topicId: topic.id}));
                         })}
                     ></${ViraButton}>
                 </div>
