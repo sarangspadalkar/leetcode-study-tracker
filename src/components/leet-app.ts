@@ -1,7 +1,24 @@
 import { defaultAppData } from '../data/default-problems.js';
 import { load } from '../services/storage.service.js';
 import type { AppData } from '../types/index.js';
-import { css, defineElement, html } from 'element-vir';
+import { css, defineElement, html, listen } from 'element-vir';
+import { LeetHeader } from './leet-header.js';
+import { LeetProgressSummary } from './leet-progress-summary.js';
+import { LeetTopicList } from './leet-topic-list.js';
+
+function getProgressCounts(data: AppData): { total: number; solved: number } {
+    const ids = new Set<string>();
+    for (const topic of data.topics) {
+        for (const group of topic.groups) {
+            for (const id of group.problemIds) ids.add(id);
+        }
+    }
+    let solved = 0;
+    for (const id of ids) {
+        if (data.progress[id]?.solved) solved++;
+    }
+    return { total: ids.size, solved };
+}
 
 export const LeetApp = defineElement()({
     tagName: 'leet-app',
@@ -25,17 +42,6 @@ export const LeetApp = defineElement()({
             width: 100%;
             padding: 32px 24px;
         }
-
-        h1 {
-            font-size: 28px;
-            font-weight: 700;
-            margin: 0 0 8px;
-        }
-
-        p {
-            color: #6c757d;
-            margin: 0;
-        }
     `,
     render({ state, updateState }) {
         if (state.appData === null && !state.loadStarted) {
@@ -47,12 +53,20 @@ export const LeetApp = defineElement()({
         if (state.appData === null) {
             return html`<div class="container"><p>Loading…</p></div>`;
         }
-        const { topics } = state.appData;
+        const data = state.appData;
+        const { total, solved } = getProgressCounts(data);
         return html`
             <div class="container">
-                <h1>LeetCode Study Tracker</h1>
-                <p>Track your progress solving LeetCode problems by topic and pattern.</p>
-                <p>${topics.length} topic(s) loaded.</p>
+                <${LeetHeader} ${listen(LeetHeader.events.resetAllRequested, () => { })}></${LeetHeader}>
+                <${LeetProgressSummary.assign({
+            totalProblems: total,
+            solvedCount: solved,
+        })}></${LeetProgressSummary}>
+                <${LeetTopicList.assign({
+            topics: data.topics,
+            problems: data.problems,
+            progress: data.progress,
+        })}></${LeetTopicList}>
             </div>
         `;
     },
