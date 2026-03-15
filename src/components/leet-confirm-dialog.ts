@@ -15,7 +15,7 @@ export const LeetConfirmDialog = defineElement<{
         .backdrop {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(28, 25, 23, 0.4);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -23,23 +23,24 @@ export const LeetConfirmDialog = defineElement<{
         }
 
         .dialog {
-            background: #fff;
-            border-radius: 8px;
+            background: var(--leet-surface);
+            border-radius: var(--leet-radius-lg);
             padding: 24px;
             max-width: 400px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            box-shadow: var(--leet-shadow-lg);
+            border: 1px solid var(--leet-border);
         }
 
         .title {
             font-size: 18px;
             font-weight: 600;
             margin: 0 0 12px;
-            color: #1a1a2e;
+            color: var(--leet-text);
         }
 
         .message {
             font-size: 14px;
-            color: #495057;
+            color: var(--leet-text-muted);
             margin: 0 0 20px;
             line-height: 1.5;
         }

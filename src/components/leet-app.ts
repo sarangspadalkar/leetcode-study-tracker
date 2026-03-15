@@ -96,12 +96,9 @@ export const LeetApp = defineElement()({
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            font-family:
-                system-ui,
-                -apple-system,
-                sans-serif;
-            color: #1a1a2e;
-            background: #f8f9fa;
+            font-family: var(--leet-font-sans);
+            color: var(--leet-text);
+            background: var(--leet-bg);
         }
 
         .container {

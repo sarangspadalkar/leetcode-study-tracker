@@ -14,13 +14,16 @@ export const LeetProgressSummary = defineElement<{
 
         .stats {
             font-size: 15px;
-            color: #495057;
+            color: var(--leet-text-muted);
             margin-bottom: 8px;
+            font-weight: 500;
         }
 
         vira-progress {
             width: 100%;
             height: 10px;
+            border-radius: var(--leet-radius-sm);
+            overflow: hidden;
         }
     `,
     render({inputs}) {

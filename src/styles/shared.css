@@ -1,0 +1,50 @@
+/**
+ * LeetCode Study Tracker — design tokens (light theme)
+ * Cohesive palette: warm neutrals, clear accents, strong difficulty/confidence cues.
+ */
+:root {
+    /* Surfaces */
+    --leet-bg: #f5f3f0;
+    --leet-surface: #ffffff;
+    --leet-surface-hover: #faf9f7;
+    --leet-border: #e5e2dd;
+    --leet-border-strong: #d4cfc7;
+
+    /* Text */
+    --leet-text: #1c1917;
+    --leet-text-muted: #57534e;
+    --leet-text-subtle: #78716c;
+
+    /* Accent (links, progress, focus) */
+    --leet-accent: #0d9488;
+    --leet-accent-hover: #0f766e;
+    --leet-accent-muted: #5eead4;
+    --leet-focus-ring: rgba(13, 148, 136, 0.4);
+
+    /* Difficulty */
+    --leet-easy-bg: #dcfce7;
+    --leet-easy-text: #166534;
+    --leet-medium-bg: #fef9c3;
+    --leet-medium-text: #854d0e;
+    --leet-hard-bg: #fee2e2;
+    --leet-hard-text: #991b1b;
+
+    /* Confidence */
+    --leet-conf-low-bg: #fee2e2;
+    --leet-conf-low-text: #991b1b;
+    --leet-conf-med-bg: #fef9c3;
+    --leet-conf-med-text: #854d0e;
+    --leet-conf-high-bg: #dcfce7;
+    --leet-conf-high-text: #166534;
+
+    /* Typography */
+    --leet-font-sans: 'DM Sans', system-ui, -apple-system, sans-serif;
+    --leet-font-display: 'DM Sans', system-ui, sans-serif;
+
+    /* Spacing & radius */
+    --leet-radius-sm: 6px;
+    --leet-radius-md: 8px;
+    --leet-radius-lg: 10px;
+    --leet-shadow: 0 1px 3px rgba(28, 25, 23, 0.08);
+    --leet-shadow-lg: 0 4px 12px rgba(28, 25, 23, 0.1);
+}
